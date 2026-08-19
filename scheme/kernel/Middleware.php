@@ -96,7 +96,16 @@ class Middleware
             throw new Exception("Middleware [$middleware] not registered.");
         }
 
-        return $this->map[$middleware]->handle($next);
+        $handler = $this->map[$middleware];
+        if (is_string($handler) && class_exists($handler)) {
+            $handler = new $handler();
+        }
+
+        if (!is_object($handler) || !method_exists($handler, 'handle')) {
+            throw new Exception("Middleware [$middleware] is invalid.");
+        }
+
+        return $handler->handle($next);
     }
 }
 

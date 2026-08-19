@@ -14,5 +14,5 @@ require_once SYSTEM_DIR . 'kernel/Middleware.php';
 require_once APP_DIR . 'middlewares/StudentMiddleware.php';
 
 $config['middlewares'] = [
-    'StudentMiddleware' => new StudentMiddleware(),
+    'StudentMiddleware' => StudentMiddleware::class,
 ];
